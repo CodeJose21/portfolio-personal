@@ -1,0 +1,126 @@
+import type { Locale } from '../store';
+
+// Keep factual content and translations together so both languages stay in sync.
+const es = {
+  navigationLabel: 'Índice principal', languageLabel: 'Idioma', portraitCaption: '01 — JOSE, EN PERSONA', languageHeading: 'CONECTANDO SIN FRONTERAS', portraitMotto: 'SOFTWARE · DATOS · PERSONAS',
+  nav: ['Inicio', 'Hard skills', 'Educación', 'Soft skills', 'Personal'],
+  skip: 'Saltar al contenido', portfolio: 'PORTFOLIO PERSONAL', hello: 'Hola, soy Jose',
+  role: 'Ingeniero Full Stack & Machine Learning',
+  intro: 'Conecto software, datos y personas para crear soluciones que sean útiles en el mundo real.',
+  contact: 'Hablemos', discover: 'Conoce mi trayectoria', portrait: 'Retrato de Jose González Blanco',
+  photoCaption: 'La tecnología empieza con las personas.',
+  languages: ['Español', 'Inglés', 'Alemán'], levels: ['Nativo', 'Bilingüe · C2 Cambridge', 'Nivel Profesional · B2 Goethe'],
+
+  skillsEyebrow: '01 / MI CAJA DE HERRAMIENTAS', skillsTitle: 'De la lógica a la solución.',
+  skillsIntro: 'Una base técnica para construir software, trabajar con datos y explorar la inteligencia artificial.',
+  skillGroups: ['Programación', 'Aprendizaje automático', 'Productividad'],
+  skillDescriptions: ['Pensamiento computacional y distintos paradigmas de programación.', 'Aprendizaje automático con YOLO y análisis de datos para comprender la información.', 'IA como herramienta de trabajo para apoyar el aprendizaje, la organización y la colaboración.'],
+  skillTools: [['Python', 'Java', 'C', 'Haskell', 'SQL', 'R'], ['YOLO', 'Análisis de datos'], ['IA como herramienta de trabajo', 'Office 365', 'Google Workspace']],
+  
+  profilePending: 'Perfil pendiente de enlazar',
+  focus: 'Áreas de enfoque', focusText: 'Desarrollo Full Stack y aprendizaje automático.',
+  eduEyebrow: '02 / APRENDIZAJE CONTINUO', eduTitle: 'Una base para seguir creciendo.',
+  eduTabs: ['Universidad', 'Erasmus+', 'Bachillerato', 'Máster juvenil'], eduLabels: ['UMA', 'TU Dortmund', 'Bachillerato', 'Máster Juvenil'],
+  education: {
+    'game-development': { title: 'Máster juvenil en desarrollo de videojuegos', institution: 'GAMIA', date: '2018-2019', text: 'Formación juvenil en desarrollo de videojuegos.', tags: ['Desarrollo de videojuegos', 'Formación juvenil'], metric: 'Completado', metricLabel: '' },
+    university: { title: 'Grado en Ingeniería del Software', institution: 'Universidad de Málaga', date: '2022 – 2026', text: 'Formación universitaria en ingeniería del software.', tags: ['Ingeniería del software', 'Formación universitaria'], metric: '8,5 / 10', metricLabel: 'Nota media' },
+    erasmus: { title: 'Programa de intercambio Erasmus+', institution: 'Technische Universität Dortmund', date: '2024 - 2025', text: 'Experiencia académica internacional en TU Dortmund, con asignaturas impartidas y superadas en alemán e inglés.', tags: ['Intercambio internacional', 'Alemán e inglés'], metric: '2', metricLabel: 'Idiomas de docencia' },
+    school: { title: 'Bachillerato Internacional', institution: 'Colegio Internacional Torrequebrada', date: 'Centro y fechas por completar', text: 'Titulo de bachillerato internacional orientado a la ciencia y la informática.', tags: ['Bachillerato'], metric: '36/45', metricLabel: 'Nota final del diploma' },
+  },
+  softEyebrow: '03 / CÓMO TRABAJO', softTitle: 'El mejor código se construye en equipo.',
+  soft: [
+    ['Comunicación de ideas', 'Experiencia en liga de debate y título Grade 8 en Communication Skills de Trinity. Comunicar ideas con claridad, estructurar argumentos y escuchar otros puntos de vista.'],
+    ['Pensamiento analítico', 'Entender el contexto, descomponer los problemas y razonar cada solución.'],
+    ['Resolución de problemas', 'Aplicar la tecnología a necesidades concretas y buscar respuestas útiles.'],
+    ['Organización y compromiso', 'Trabajar con dedicación, estructura y atención a lo que importa.'],
+    ['Proactividad y empatía', 'Aportar ideas, escuchar y contribuir a un entorno de trabajo respetuoso.'],
+  ],
+  personalEyebrow: '04 / MÁS ALLÁ DEL CÓDIGO', personalTitle: 'Desconectar es la mejor forma de conectar.',
+  personalText: 'Procuro llevar una vida sana, combinando hábitos saludables de alimentación con el deporte. Reservar tiempo para cuidarme y desconectar de las pantallas me ayuda a recuperar energía y volver con la mente despejada. Para mí, el equilibrio también se construye fuera del trabajo.',
+  personalTags: ['Alimentación saludable', 'Deporte', 'Equilibrio'],
+  personalPhoto: 'Un momento para desconectar', personalPhotoPending: 'Espacio reservado para una foto personal',
+  footer: 'Construido con React, TypeScript y Redux.', back: 'Volver arriba',
+};
+
+// This mapped type catches missing translations without coupling copy to JSX.
+type Translation = typeof es;
+const en: Translation = {
+  navigationLabel: 'Main navigation', languageLabel: 'Language', portraitCaption: '01 — JOSE, IN PERSON', languageHeading: 'CONNECTING ACROSS BORDERS', portraitMotto: 'SOFTWARE · DATA · PEOPLE',
+  nav: ['Home', 'Hard skills', 'Education', 'Soft skills', 'Personal'],
+  skip: 'Skip to content', portfolio: 'PERSONAL PORTFOLIO', hello: "Hi, I’m Jose",
+  role: 'Full Stack & Machine Learning Engineer',
+  intro: 'Connecting software, data and people to build solutions that make a difference in the real world.',
+  contact: 'Let’s talk', discover: 'Explore my journey', portrait: 'Portrait of Jose González Blanco',
+  photoCaption: 'Technology starts with people.',
+  languages: ['Spanish', 'English', 'German'], levels: ['Native', 'Bilingual · C2 Cambridge', 'Professional proficiency · B2 Goethe'],
+  skillsEyebrow: '01 / MY TOOLKIT', skillsTitle: 'From logic to solutions.',
+  skillsIntro: 'A technical foundation for building software, working with data and exploring artificial intelligence.',
+  skillGroups: ['Programming', 'Machine learning', 'Productivity'],
+  skillDescriptions: ['Computational thinking across different programming paradigms.', 'Machine learning with YOLO and data analysis to make sense of information.', 'AI as a work tool to support learning, organisation and collaboration.'],
+  skillTools: [['Python', 'Java', 'C', 'Haskell', 'SQL', 'R'], ['YOLO', 'Data analysis'], ['AI as a work tool', 'Office 365', 'Google Workspace']],
+  profilePending: 'Profile link pending',
+  focus: 'Areas of focus', focusText: 'Full Stack development and machine learning.',
+  eduEyebrow: '02 / ALWAYS LEARNING', eduTitle: 'A foundation to keep growing.',
+  eduTabs: ['University', 'Erasmus+', 'Secondary education', 'Junior master'], eduLabels: ['UMA', 'TU Dortmund', 'Secondary education', 'Junior master'],
+  education: {
+    'game-development': { title: 'Junior master programme in game development', institution: 'GAMIA', date: '2018-2019', text: 'A youth programme in game development.', tags: ['Game development', 'Youth education'], metric: 'Completed', metricLabel: '' },
+    university: { title: 'Bachelor’s in Software Engineering', institution: 'Universidad de Málaga', date: '2022 – 2026', text: 'University education in software engineering.', tags: ['Software engineering', 'University education'], metric: '8.5 / 10', metricLabel: 'Average grade' },
+    erasmus: { title: 'Erasmus+ exchange programme', institution: 'Technische Universität Dortmund', date: '2024 - 2025', text: 'International academic experience at TU Dortmund, with courses taught and successfully completed in German and English.', tags: ['International exchange', 'German and English'], metric: '2', metricLabel: 'Teaching languages' },
+    school: { title: 'International Baccalaureate', institution: 'Colegio Internacional Torrequebrada', date: 'School and dates to be added', text: 'International Baccalaureate diploma with a focus on science and computer science.', tags: ['Secondary education'], metric: '36/45', metricLabel: 'Final diploma score' },
+  },
+  softEyebrow: '03 / HOW I WORK', softTitle: 'The best code is built together.',
+  soft: [
+    ['Communicating ideas', 'Debate league experience and a Trinity Grade 8 qualification in Communication Skills. Expressing ideas clearly, structuring arguments and listening to other perspectives.'],
+    ['Analytical thinking', 'Understand the context, break down problems and reason through each solution.'],
+    ['Problem-solving', 'Apply technology to specific needs and seek useful answers.'],
+    ['Organisation & dedication', 'Work with commitment, structure and attention to what matters.'],
+    ['Initiative & empathy', 'Contribute ideas, listen and help create a respectful working environment.'],
+  ],
+  personalEyebrow: '04 / BEYOND THE CODE', personalTitle: 'Disconnecting is the best way to reconnect.',
+  personalText: 'I try to lead a healthy life by combining healthy eating habits with sport. Making time to look after myself and step away from screens helps me recharge and return with a clear mind. For me, balance is also built outside work.',
+  personalTags: ['Healthy eating', 'Sport', 'Balance'],
+  personalPhoto: 'A moment to disconnect', personalPhotoPending: 'Space reserved for a personal photo',
+  footer: 'Built with React, TypeScript and Redux.', back: 'Back to top',
+};
+
+const de: Translation = {
+  navigationLabel: 'Hauptnavigation', languageLabel: 'Sprache', portraitCaption: '01 — JOSE, PERSÖNLICH', languageHeading: 'GRENZENLOS IN VERBINDUNG', portraitMotto: 'SOFTWARE · DATEN · MENSCHEN',
+  nav: ['Start', 'Hard Skills', 'Ausbildung', 'Soft Skills', 'Persönliches'],
+  skip: 'Zum Inhalt springen', portfolio: 'PERSÖNLICHES PORTFOLIO', hello: 'Hallo, ich bin Jose',
+  role: 'Ingenieur für Full-Stack-Entwicklung und maschinelles Lernen',
+  intro: 'Ich verbinde Software, Daten und Menschen, um Lösungen zu entwickeln, die im Alltag nützlich sind.',
+  contact: 'Kontakt aufnehmen', discover: 'Mein Werdegang', portrait: 'Porträt von Jose González Blanco',
+  photoCaption: 'Technologie beginnt mit Menschen.',
+  languages: ['Spanisch', 'Englisch', 'Deutsch'], levels: ['Muttersprache', 'Zweisprachig · C2 Cambridge', 'Berufliche Sprachkenntnisse · B2 Goethe'],
+  skillsEyebrow: '01 / MEIN WERKZEUGKASTEN', skillsTitle: 'Von der Logik zur Lösung.',
+  skillsIntro: 'Eine technische Grundlage, um Software zu entwickeln, mit Daten zu arbeiten und künstliche Intelligenz zu erkunden.',
+  skillGroups: ['Programmierung', 'Maschinelles Lernen', 'Produktivität'],
+  skillDescriptions: ['Algorithmisches Denken und verschiedene Programmierparadigmen.', 'Maschinelles Lernen mit YOLO und Datenanalyse, um Informationen zu verstehen.', 'KI als Arbeitswerkzeug zur Unterstützung von Lernen, Organisation und Zusammenarbeit.'],
+  skillTools: [['Python', 'Java', 'C', 'Haskell', 'SQL', 'R'], ['YOLO', 'Datenanalyse'], ['KI als Arbeitswerkzeug', 'Office 365', 'Google Workspace']],
+  profilePending: 'Profil noch nicht verlinkt',
+  focus: 'Schwerpunkte', focusText: 'Full-Stack-Entwicklung und maschinelles Lernen.',
+  eduEyebrow: '02 / KONTINUIERLICHES LERNEN', eduTitle: 'Eine Grundlage, um weiterzuwachsen.',
+  eduTabs: ['Universität', 'Erasmus+', 'Schulabschluss', 'Junior-Master'], eduLabels: ['UMA', 'TU Dortmund', 'Schulabschluss', 'Junior-Master'],
+  education: {
+    'game-development': { title: 'Junior-Master-Programm in Spieleentwicklung', institution: 'GAMIA', date: '2018-2019', text: 'Ausbildung in Spieleentwicklung für Jugendliche.', tags: ['Spieleentwicklung', 'Jugendbildung'], metric: 'Abgeschlossen', metricLabel: '' },
+    university: { title: 'Bachelorstudium Software Engineering', institution: 'Universidad de Málaga', date: '2022 – 2026', text: 'Universitäre Ausbildung im Bereich Software Engineering.', tags: ['Software Engineering', 'Universitäre Ausbildung'], metric: '8,5 / 10', metricLabel: 'Notendurchschnitt' },
+    erasmus: { title: 'Erasmus+-Austauschprogramm', institution: 'Technische Universität Dortmund', date: '2024 - 2025', text: 'Internationale Studienerfahrung an der TU Dortmund mit Lehrveranstaltungen auf Deutsch und Englisch, die erfolgreich abgeschlossen wurden.', tags: ['Internationaler Austausch', 'Deutsch und Englisch'], metric: '2', metricLabel: 'Unterrichtssprachen' },
+    school: { title: 'International Baccalaureate', institution: 'Colegio Internacional Torrequebrada', date: 'Schule und Zeitraum noch zu ergänzen', text: 'International-Baccalaureate-Diplom mit Schwerpunkt Naturwissenschaften und Informatik.', tags: ['Schulabschluss'], metric: '36/45', metricLabel: 'Abschlussnote des Diploms' },
+  },
+  softEyebrow: '03 / MEINE ARBEITSWEISE', softTitle: 'Der beste Code entsteht im Team.',
+  soft: [
+    ['Ideen vermitteln', 'Erfahrung in einer Debattierliga und ein Grade-8-Abschluss in Communication Skills von Trinity. Ideen klar vermitteln, Argumente strukturieren und anderen Sichtweisen zuhören.'],
+    ['Analytisches Denken', 'Zusammenhänge verstehen, Probleme in Teilaufgaben zerlegen und Lösungen durchdenken.'],
+    ['Problemlösung', 'Technologie für konkrete Bedürfnisse einsetzen und nützliche Antworten finden.'],
+    ['Organisation und Engagement', 'Mit Einsatz, Struktur und einem Blick für das Wesentliche arbeiten.'],
+    ['Eigeninitiative und Empathie', 'Ideen einbringen, zuhören und zu einem respektvollen Arbeitsumfeld beitragen.'],
+  ],
+  personalEyebrow: '04 / ABSEITS DES CODES', personalTitle: 'Abschalten, um wieder anzuknüpfen.',
+  personalText: 'Ich versuche, gesund zu leben und ausgewogene Ernährung mit Sport zu verbinden. Mir Zeit für mich zu nehmen und Abstand von Bildschirmen zu gewinnen, hilft mir, neue Energie zu tanken und mit klarem Kopf zurückzukehren. Für mich entsteht Ausgeglichenheit auch außerhalb der Arbeit.',
+  personalTags: ['Gesunde Ernährung', 'Sport', 'Ausgeglichenheit'],
+  personalPhoto: 'Ein Moment zum Abschalten', personalPhotoPending: 'Platz für ein persönliches Foto',
+  footer: 'Entwickelt mit React, TypeScript und Redux.', back: 'Nach oben',
+};
+
+export const translations: Record<Locale, Translation> = { es, en, de };
+export const sectionIds = ['home', 'skills', 'education', 'soft-skills', 'personal'] as const;
