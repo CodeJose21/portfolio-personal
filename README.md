@@ -40,3 +40,16 @@ Actualiza los objetos `es` y `en` conjuntamente al incorporar nuevos datos. El t
 Dependencias instaladas con autorización y versiones fijadas en `package-lock.json`. La auditoría de npm durante la instalación informó de cero vulnerabilidades conocidas. La comprobación de TypeScript y el build de producción se completaron correctamente. El sitio no está publicado.
 
 Pendiente de comprobación en navegador: cambio de idioma y persistencia, enlaces del índice y contacto, pestañas con ratón y teclado, y distribución móvil y escritorio.
+
+## Publicar en GitHub Pages
+
+1. Sube los cambios a la rama `main`, incluyendo `.github/workflows/deploy.yml` y `package-lock.json`.
+2. En GitHub, abre **Settings → Pages → Build and deployment → Source** y selecciona **GitHub Actions**.
+3. En **Actions**, espera a que termine **Deploy portfolio to GitHub Pages**. Si es necesario, ejecútalo con **Run workflow**.
+4. Abre https://codejose21.github.io/portfolio-personal/.
+
+El workflow instala las dependencias, comprueba TypeScript, compila y publica únicamente `dist`. No configures Pages para servir directamente los archivos fuente de la raíz: el navegador no ejecuta el archivo TSX de desarrollo.
+
+La compilación utiliza `/portfolio-personal/` como ruta base y las fotografías se resuelven con esa misma base. Si cambias de nombre el repositorio, actualiza `base` en `vite.config.ts`. Para un dominio propio servido desde la raíz, compila con `npm run build -- --base=/`.
+
+Para revisar el resultado localmente, ejecuta `npm run build` y `npm run preview`, y abre la dirección que muestra Vite incluyendo `/portfolio-personal/`.
