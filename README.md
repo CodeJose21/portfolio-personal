@@ -1,55 +1,40 @@
 # Portfolio · Jose González Blanco
 
-Portfolio bilingüe (español/inglés) con React, TypeScript, Redux Toolkit y Vite. Diseño adaptable con navegación sticky, fotografía del CV, competencias, educación con pestañas accesibles y sección personal.
+Portfolio en español, inglés y alemán con React, TypeScript, Redux Toolkit y Vite. La interfaz es un dado de seis caras con giros 3D y una paleta camel oscura.
 
-## Uso local
+## Ejecutar y compilar
 
-Requiere Node.js 20.19+ o 22.12+ y npm.
+Con Node.js 22.12+ y npm:
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
+
+Para comprobar la versión de producción:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-El build comprueba TypeScript y genera el sitio estático en `dist/`. Las versiones exactas están fijadas en `package-lock.json`. Usa `npm ci` en integración continua.
+`build` comprueba TypeScript y genera `dist/`. En la vista previa abre la dirección indicada por Vite con `/portfolio-personal/`. En PowerShell, si se bloquea `npm`, utiliza `npm.cmd`.
 
-## Organización
+## Editar contenido
 
-- `src/content/translations.ts`: contenido y traducciones con comprobación de tipos.
-- `src/store/index.ts`: estado de idioma y selección de educación; hooks tipados de Redux.
-- `src/components/`: navegación, cabeceras y panel educativo con teclado.
-- `src/App.tsx`: composición de secciones y sincronización de idioma/metadatos.
-- `src/styles.css`: estilos, responsive, foco visible y movimiento reducido.
-- `public/jose-gonzalez.jpg`: fotografía extraída del CV proporcionado.
+- `src/content/work.ts`: proyectos y experiencia; título y descripción en `es`, `en` y `de`, y tecnologías. Duplica entradas con identificadores únicos para añadir tarjetas.
+- `src/content/translations.ts`: presentación, idiomas, habilidades, educación y contenido personal.
+- `src/content/profile.ts`: enlaces sociales y fotografía personal opcional.
+- `src/content/cube.ts`: nombres de caras, navegación y orientación del dado.
+- `src/styles.css`: colores, tamaños y diseño adaptable.
+- `public/`: imágenes, referenciadas mediante `publicAsset` para respetar la ruta de GitHub Pages.
 
-La preferencia de idioma se guarda localmente, con tolerancia a almacenamiento bloqueado. Las pestañas educativas admiten flechas arriba/abajo e Inicio/Fin. Los enlaces de contacto utilizan correo y teléfono, sin formularios ni servicios externos. Las fuentes de Google tienen fuentes de sistema como alternativa.
+Proyectos y experiencia tienen campos vacíos intencionadamente. Se muestran «Título», «Descripción» y «Por completar» hasta que añadas información. No hay un editor dentro de la web: se modifica el repositorio y se vuelve a compilar.
 
-## Contenido por confirmar
+## GitHub Pages
 
-El CV indica Ingeniería del Software en la UMA en curso y recoge el periodo 2022–2024, y Erasmus en TU Dortmund en 2024/2025. No se ha supuesto una graduación posterior. Bachillerato está preparado, pero su centro, modalidad y fechas no aparecen en el CV. Alemán conserva el estado «C1 en proceso». Full Stack y Machine Learning son el enfoque solicitado; no se han inventado proyectos, experiencia profesional, frameworks dominados ni métricas de habilidades.
+El workflow `.github/workflows/deploy.yml` compila y publica únicamente `dist/`. Mantén **Settings → Pages → Source → GitHub Actions** y sube los cambios a `main` para activar el despliegue existente.
 
-Actualiza los objetos `es` y `en` conjuntamente al incorporar nuevos datos. El teléfono y correo del CV están incluidos como contenido visible.
+La ruta de producción sigue siendo [codejose21.github.io/portfolio-personal/](https://codejose21.github.io/portfolio-personal/). Vite conserva `/portfolio-personal/` como base. No publiques el `index.html` fuente: referencia TSX de desarrollo.
 
-## Estado de comprobación
-
-Dependencias instaladas con autorización y versiones fijadas en `package-lock.json`. La auditoría de npm durante la instalación informó de cero vulnerabilidades conocidas. La comprobación de TypeScript y el build de producción se completaron correctamente. El sitio no está publicado.
-
-Pendiente de comprobación en navegador: cambio de idioma y persistencia, enlaces del índice y contacto, pestañas con ratón y teclado, y distribución móvil y escritorio.
-
-## Publicar en GitHub Pages
-
-1. Sube los cambios a la rama `main`, incluyendo `.github/workflows/deploy.yml` y `package-lock.json`.
-2. En GitHub, abre **Settings → Pages → Build and deployment → Source** y selecciona **GitHub Actions**.
-3. En **Actions**, espera a que termine **Deploy portfolio to GitHub Pages**. Si es necesario, ejecútalo con **Run workflow**.
-4. Abre https://codejose21.github.io/portfolio-personal/.
-
-El workflow instala las dependencias, comprueba TypeScript, compila y publica únicamente `dist`. No configures Pages para servir directamente los archivos fuente de la raíz: el navegador no ejecuta el archivo TSX de desarrollo.
-
-La compilación utiliza `/portfolio-personal/` como ruta base y las fotografías se resuelven con esa misma base. Si cambias de nombre el repositorio, actualiza `base` en `vite.config.ts`. Para un dominio propio servido desde la raíz, compila con `npm run build -- --base=/`.
-
-Para revisar el resultado localmente, ejecuta `npm run build` y `npm run preview`, y abre la dirección que muestra Vite incluyendo `/portfolio-personal/`.
+Consulta el [informe del rediseño](docs/informe-redisenio-dado.md) para conocer la arquitectura, las verificaciones y las limitaciones.

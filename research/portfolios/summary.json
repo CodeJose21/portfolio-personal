@@ -1,0 +1,43 @@
+{
+  "checked_at_utc": "2026-09-06T09:18:19.563683+00:00",
+  "entries": 1983,
+  "checked": 1983,
+  "unique_urls": 1983,
+  "http_200": 1937,
+  "status_counts": {
+    "0": 31,
+    "200": 1937,
+    "303": 1,
+    "307": 1,
+    "403": 3,
+    "404": 3,
+    "429": 5,
+    "500": 1,
+    "503": 1
+  },
+  "usable_html": 1276,
+  "features": {
+    "projects": 1127,
+    "about": 1012,
+    "contact": 932,
+    "experience": 802,
+    "skills": 860,
+    "education": 485,
+    "writing": 607,
+    "resume": 584,
+    "testimonials": 90,
+    "availability": 394,
+    "case_studies": 102,
+    "machine_learning": 224
+  },
+  "links": {
+    "github": 1118,
+    "linkedin": 1045,
+    "email": 693
+  },
+  "metadata": {
+    "missing_description": 149,
+    "missing_lang": 47,
+    "missing_viewport": 6
+  }
+}
