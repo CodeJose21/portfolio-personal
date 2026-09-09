@@ -25,8 +25,17 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Check code quality
+        run: npm run lint
       - name: Build
         run: npm run build
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Test compiled portfolio
+        run: npm test
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:4173/portfolio-personal/
+          PLAYWRIGHT_SERVER_COMMAND: npm run preview -- --port 4173 --strictPort
       - name: Upload compiled site
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:

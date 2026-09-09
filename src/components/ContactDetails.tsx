@@ -5,7 +5,7 @@ import { useAppSelector } from '../store';
 
 export function ContactDetails() {
   const locale = useAppSelector(state => state.ui.locale);
-  const t = translations[locale];
+  const t = translations[locale].common;
   return <div className="contact-details">
     <a href="mailto:josegonzb@gmail.com"><Mail size={15}/>josegonzb@gmail.com</a>
     <a href="tel:+34640161643"><Phone size={15}/>+34 640 16 16 43</a>

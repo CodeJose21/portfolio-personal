@@ -1,22 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 /* Theme tokens and a shared edge length keep every face consistent. */
 :root {
-  font-family:'DM Sans',sans-serif;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   color:#f1e7db;
   background:#151310;
   color-scheme:dark;
   font-synthesis:none;
   --brand:#d2ac7d;
-  --muted:#b6a794;
+  --muted:#c3b4a2;
   --line:#473b2e;
   --surface:#231e18;
   --raised:#2c251d;
-  --heading:'Manrope',sans-serif;
+  --heading:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --size:min(650px,calc(100vw - 390px));
   --half:calc(var(--size)/2)
 }
 * {
   box-sizing:border-box
+}
+/* Layout display rules must never expose inactive sections. */
+[hidden] {
+  display:none!important
+}
+html {
+  scroll-padding-top:24px
 }
 body {
   margin:0;
@@ -25,6 +31,12 @@ body {
 button,a {
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation
+}
+img {
+  max-width:100%
+}
+button,a,summary {
+  overflow-wrap:anywhere
 }
 button {
   font:inherit;
@@ -35,7 +47,7 @@ a {
   color:inherit;
   text-decoration:none
 }
-button:focus-visible,a:focus-visible,[tabindex]:focus-visible {
+button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visible {
   outline:2px solid var(--brand);
   outline-offset:4px
 }
@@ -52,7 +64,7 @@ svg {
   flex-shrink:0
 }
 button[aria-disabled=true] {
-  cursor:wait
+  cursor:default
 }
 ::selection {
   background:var(--brand);
@@ -88,7 +100,7 @@ button[aria-disabled=true] {
   display:flex;
   gap:16px;
   align-items:center;
-  font-size:12px;
+  font-size:13px;
   letter-spacing:1.5px;
   font-weight:600
 }
@@ -101,8 +113,8 @@ button[aria-disabled=true] {
 }
 .brand small {
   display:block;
-  font-size:9px;
-  letter-spacing:2px;
+  font-size:12px;
+  letter-spacing:1px;
   color:var(--muted);
   font-weight:400;
   margin-top:7px
@@ -115,8 +127,10 @@ button[aria-disabled=true] {
   background:transparent;
   border:1px solid transparent;
   padding:9px 10px;
-  font-size:11px;
-  border-radius:3px
+  font-size:13px;
+  border-radius:3px;
+  min-width:44px;
+  min-height:44px
 }
 .locale-switch button[aria-pressed=true] {
   border-color:var(--line);
@@ -138,14 +152,15 @@ button[aria-disabled=true] {
   align-items:center;
   gap:8px;
   color:var(--brand);
-  font-size:10px;
+  font-size:12px;
   letter-spacing:1.8px;
   line-height:1.6;
   text-transform:uppercase;
   margin-bottom:17px
 }
 .explorer {
-  padding-top:35px
+  padding-top:35px;
+  min-width:0
 }
 .explorer h1 {
   font-size:34px;
@@ -156,7 +171,7 @@ button[aria-disabled=true] {
   margin-bottom:19px
 }
 .explorer-note {
-  font-size:13px;
+  font-size:14px;
   color:var(--muted);
   max-width:215px;
   margin-bottom:28px
@@ -166,7 +181,7 @@ button[aria-disabled=true] {
   flex-direction:column;
   gap:5px
 }
-.face-navigation button {
+.face-navigation :is(button,a) {
   display:flex;
   align-items:center;
   gap:14px;
@@ -176,22 +191,53 @@ button[aria-disabled=true] {
   border-radius:5px;
   text-align:left;
   color:var(--muted);
-  font-size:13px;
-  min-width:0
+  font-size:14px;
+  min-width:0;
+  min-height:48px
 }
-.face-navigation button[aria-current] {
+.face-navigation :is(button,a)[aria-current] {
   background:#30261b;
   border-color:#695038;
-  color:var(--brand)
+  color:#f1d2aa;
+  box-shadow:inset 3px 0 0 var(--brand);
+  font-weight:600
 }
-.face-navigation button:hover {
+.face-navigation :is(button,a):hover {
   background:var(--raised)
 }
-.face-navigation button small {
+.face-navigation :is(button,a) small {
   display:block;
-  font-size:10px;
+  font-size:12px;
   margin-top:4px;
   color:var(--muted)
+}
+.view-switch {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:22px 0;
+  padding:5px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:var(--surface)
+}
+.view-switch button {
+  flex:1 1 84px;
+  min-height:44px;
+  padding:9px 10px;
+  font-size:13px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background:transparent;
+  color:var(--muted)
+}
+.view-switch button[aria-pressed=true] {
+  background:var(--brand);
+  color:#21180f;
+  font-weight:600
+}
+.view-switch button:hover {
+  border-color:var(--brand)
 }
 
 
@@ -251,20 +297,19 @@ button[aria-disabled=true] {
 .map-projects {
   grid-area:2/1
 }
-.map-experience {
+.map-soft {
   grid-area:2/3
 }
 .map-education {
   grid-area:1/2
 }
-.map-soft {
+.map-experience {
   grid-area:3/2
 }
 .map-personal {
   grid-area:4/2
 }
-/* The cube is real CSS 3D geometry;
-only the content of each face scrolls. */
+/* The animated cube is decorative; its stationary content remains a flat panel. */
 .cube-column {
   min-width:0
 }
@@ -272,8 +317,9 @@ only the content of each face scrolls. */
   display:flex;
   justify-content:space-between;
   color:var(--muted);
-  font-size:9px;
-  letter-spacing:1.7px;
+  font-size:12px;
+  letter-spacing:1px;
+  gap:12px;
   margin-bottom:17px
 }
 .cube-scene {
@@ -289,8 +335,7 @@ only the content of each face scrolls. */
   width:100%;
   height:100%;
   transform-style:preserve-3d;
-  transform:translateZ(calc(0px - var(--half))) rotateX(var(--rx)) rotateY(var(--ry));
-  transition:transform 800ms cubic-bezier(.65,0,.25,1)
+  transform:translateZ(calc(0px - var(--half))) rotateX(var(--rx)) rotateY(var(--ry))
 }
 .cube-face {
   position:absolute;
@@ -308,13 +353,34 @@ only the content of each face scrolls. */
   backface-visibility:visible;
   pointer-events:auto;
 }
+.cube-scene.is-turning .face-interactive {
+  visibility:hidden
+}
+.cube-art {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  padding:30px;
+  flex:1;
+  text-align:center;
+  color:var(--brand);
+  font-size:clamp(20px,3vw,32px)
+}
+.cube-art .die-pips {
+  width:30%;
+  height:auto;
+  aspect-ratio:1;
+  gap:12px
+}
 .face-header {
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:22px 30px;
   border-bottom:1px solid var(--line);
-  font-size:11px;
+  font-size:13px;
   color:var(--brand);
   letter-spacing:1px
 }
@@ -326,20 +392,41 @@ only the content of each face scrolls. */
 .face-scroll {
   flex:1;
   min-height:0;
+  min-width:0;
+  overflow-wrap:anywhere;
   overflow:auto;
   overscroll-behavior:contain;
   padding:28px 32px;
   scrollbar-width:thin;
-  scrollbar-color:#796044 transparent;
+  scrollbar-color:var(--brand) transparent;
   outline-offset:-5px!important
+}
+.face-scroll::-webkit-scrollbar {
+  width:8px;
+  height:8px
+}
+.face-scroll::-webkit-scrollbar-track {
+  background:transparent
+}
+.face-scroll::-webkit-scrollbar-thumb {
+  background:var(--brand);
+  border:2px solid transparent;
+  border-radius:8px;
+  background-clip:padding-box
+}
+.face-scroll::-webkit-scrollbar-thumb:hover {
+  background:#e2c08f;
+  background-clip:padding-box
 }
 .face-footnote {
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
+  text-align:center;
+  flex-shrink:0;
   padding:12px 30px;
-  font-size:8px;
-  letter-spacing:1.5px;
-  color:#a39079;
+  font-size:12px;
+  letter-spacing:.4px;
+  color:var(--muted);
   border-top:1px solid var(--line)
 }
 .face-scroll h2 {
@@ -355,10 +442,10 @@ only the content of each face scrolls. */
   margin-bottom:10px
 }
 .face-scroll h4 {
-  font-size:13px
+  font-size:14px
 }
 .intro {
-  font-size:14px;
+  font-size:15px;
   color:var(--muted);
   margin-bottom:24px
 }
@@ -367,6 +454,9 @@ only the content of each face scrolls. */
   justify-content:space-between;
   gap:20px;
   align-items:center
+}
+.identity>div {
+  min-width:0
 }
 .identity h2 {
   font-size:48px;
@@ -386,17 +476,18 @@ only the content of each face scrolls. */
   width:105px;
   height:130px;
   object-fit:cover;
+  flex-shrink:0;
   border-radius:50px 50px 6px 6px;
   filter:saturate(.6);
   border:1px solid var(--line)
 }
 .occupation {
-  font-size:14px;
+  font-size:15px;
   margin:20px 0 10px;
   color:#e9d4b9
 }
 .contact-face>.intro {
-  font-size:13px;
+  font-size:14px;
   max-width:470px;
   margin-bottom:16px
 }
@@ -404,7 +495,7 @@ only the content of each face scrolls. */
   display:flex;
   flex-wrap:wrap;
   gap:13px 22px;
-  font-size:12px
+  font-size:14px
 }
 .contact-details a,.profile-pending {
   display:inline-flex;
@@ -423,7 +514,7 @@ only the content of each face scrolls. */
   color:var(--brand)
 }
 .profile-pending small {
-  font-size:10px
+  font-size:12px
 }
 .languages {
   margin-top:25px;
@@ -431,14 +522,14 @@ only the content of each face scrolls. */
   border-top:1px solid var(--line)
 }
 .languages .eyebrow {
-  font-size:9px;
+  font-size:12px;
   margin-bottom:10px
 }
 .language {
   display:flex;
   gap:12px;
   align-items:center;
-  font-size:12px;
+  font-size:14px;
   margin-top:11px
 }
 .language img {
@@ -450,7 +541,7 @@ only the content of each face scrolls. */
   font-weight:500
 }
 .language>span {
-  font-size:11px;
+  font-size:13px;
   color:var(--muted);
   margin-left:auto;
   text-align:right
@@ -467,18 +558,47 @@ only the content of each face scrolls. */
   align-items:center;
   justify-content:space-between;
   color:var(--brand);
-  font-size:11px;
+  font-size:12px;
+  gap:12px;
   letter-spacing:1px;
   margin-bottom:22px
 }
 .work-card-heading small {
   color:var(--muted);
-  font-size:10px
+  font-size:12px
 }
+.project-status {
+  padding:6px 10px;
+  border:1px solid currentColor;
+  border-radius:20px;
+  font-size:12px;
+  letter-spacing:.3px;
+}
+.status-in-progress { color:#e1bb85; background:#45351f; }
+.status-paused { color:#c7bbb0; background:#352e28; }
+.status-completed { color:#c2d0aa; background:#2e3525; }
 .work-card p {
-  font-size:14px;
+  font-size:15px;
   color:var(--muted);
   min-height:42px
+}
+.work-empty {
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--raised);
+  color:var(--muted)
+}
+.work-empty>svg {
+  color:var(--brand);
+  margin-bottom:20px
+}
+.work-empty h3 {
+  color:#f1e7db
+}
+.work-empty p {
+  margin-bottom:0;
+  font-size:15px
 }
 .placeholder-copy {
   border-bottom:1px dashed var(--line);
@@ -495,7 +615,7 @@ only the content of each face scrolls. */
   display:flex;
   gap:12px;
   align-items:center;
-  font-size:11px;
+  font-size:12px;
   color:var(--brand);
   text-transform:uppercase;
   letter-spacing:1px
@@ -510,29 +630,13 @@ only the content of each face scrolls. */
   padding:8px 12px;
   border:1px solid #96724b;
   border-radius:4px;
-  font-size:12px;
+  font-size:13px;
   background:#211911
 }
 .technology-tags .empty-tech {
   border-style:dashed;
   color:var(--muted);
   background:transparent
-}
-.toolbox-title {
-  margin-top:30px
-}
-.toolbox {
-  display:flex;
-  flex-direction:column;
-  gap:20px
-}
-.toolbox h4 {
-  margin-bottom:7px
-}
-.toolbox p {
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.7
 }
 .tags {
   display:flex;
@@ -544,26 +648,105 @@ only the content of each face scrolls. */
   border:1px solid var(--line);
   border-radius:3px;
   padding:5px 8px;
-  font-size:10px;
+  font-size:12px;
   color:#e6ceb1
 }
-.soft-list article {
-  display:flex;
-  gap:20px;
-  padding:18px 0;
-  border-bottom:1px solid var(--line)
+.soft-list {
+  display:grid;
+  gap:14px
 }
-.soft-list article:first-child {
-  padding-top:5px
+.soft-skill {
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#282119
+}
+.soft-skill-summary {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-height:72px;
+  padding:18px;
+  list-style:none;
+  cursor:pointer;
+  border-radius:8px
+}
+.soft-skill-summary::-webkit-details-marker {
+  display:none
+}
+.soft-skill-summary:hover {
+  background:#35291e
+}
+.soft-skill-title {
+  display:block;
+  margin:0 0 5px;
+  font-size:17px;
+  font-weight:600;
+  line-height:1.4
+}
+.soft-skill-heading {
+  flex:1;
+  min-width:0
+}
+.soft-skill-icon {
+  display:flex;
+  flex-shrink:0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:48px;
+  min-height:54px;
+  color:var(--brand);
+  border:1px solid #8b6b47;
+  border-radius:6px;
+  background:#211a14
+}
+.soft-skill-icon span {
+  font-family:monospace;
+  font-size:12px;
+  color:var(--muted)
+}
+.soft-skill-panel {
+  padding:18px;
+  border-top:1px solid var(--line)
+}
+.soft-skill-toggle {
+  width:20px;
+  height:20px;
+  color:var(--brand)
+}
+.soft-skill[open] .soft-skill-toggle {
+  transform:rotate(180deg)
+}
+.soft-list .skill-evidence {
+  display:block;
+  color:var(--brand);
+  font-weight:600;
+  font-size:13px;
+  margin-bottom:0
+}
+.skill-application {
+  border-left:2px solid var(--brand);
+  padding-left:12px;
+  margin-top:16px;
+}
+.skill-application>span {
+  display:block;
+  color:var(--brand);
+  font-size:12px;
+  margin-bottom:6px;
+}
+.skill-tags {
+  margin-top:16px;
 }
 .list-number {
   color:var(--brand);
   font-family:monospace;
-  font-size:11px;
+  font-size:12px;
   padding-top:3px
 }
 .soft-list p {
-  font-size:13px;
+  font-size:15px;
   color:var(--muted);
   margin-bottom:0
 }
@@ -590,7 +773,7 @@ only the content of each face scrolls. */
   font-size:12px
 }
 .personal-photo figcaption {
-  font-size:10px;
+  font-size:12px;
   color:var(--muted);
   margin-top:10px
 }
@@ -602,7 +785,7 @@ only the content of each face scrolls. */
 }
 .education-layout {
   display:grid;
-  grid-template-columns:145px minmax(0,1fr);
+  grid-template-columns:minmax(140px, .7fr) minmax(0,1.3fr);
   gap:18px
 }
 .education-tabs {
@@ -622,7 +805,7 @@ only the content of each face scrolls. */
   cursor:pointer;
   min-height:56px;
   box-shadow:0 2px 0 #100d09;
-  font-size:11px
+  font-size:13px
 }
 .education-tabs button:hover {
   border-color:var(--brand);
@@ -637,7 +820,7 @@ only the content of each face scrolls. */
 }
 .education-tabs small {
   display:block;
-  font-size:9px;
+  font-size:12px;
   margin-top:5px
 }
 .education-tabs svg {
@@ -645,7 +828,7 @@ only the content of each face scrolls. */
   flex-shrink:0
 }
 .tab-number {
-  font-size:9px
+  font-size:12px
 }
 .education-panel {
   padding:16px;
@@ -665,11 +848,11 @@ only the content of each face scrolls. */
   color:var(--brand)
 }
 .date {
-  font-size:10px;
+  font-size:12px;
   color:var(--muted)
 }
 .institution {
-  font-size:11px;
+  font-size:13px;
   color:var(--brand)
 }
 .education-panel h3 {
@@ -677,7 +860,7 @@ only the content of each face scrolls. */
   line-height:1.3
 }
 .education-copy {
-  font-size:13px;
+  font-size:15px;
   color:var(--muted)
 }
 .education-bottom {
@@ -694,20 +877,42 @@ only the content of each face scrolls. */
 }
 .grade small {
   display:block;
-  font-size:10px;
+  font-size:12px;
   color:var(--muted);
   margin-top:6px
 }
 .site-footer {
   max-width:1232px;
   margin:0 auto;
-  padding:20px 0;
+  padding:20px 24px;
   border-top:1px solid var(--line);
   display:flex;
   justify-content:space-between;
   gap:14px;
-  font-size:10px;
+  font-size:12px;
   color:var(--muted)
+}
+/* The reading view shares the same content and state, without nested scrolling. */
+.linear-sections {
+  display:grid;
+  gap:28px;
+  min-width:0
+}
+.linear-section {
+  position:relative;
+  inset:auto;
+  width:100%;
+  min-width:0;
+  overflow:visible;
+  scroll-margin-top:24px
+}
+.linear-section .face-scroll {
+  overflow:visible;
+  flex:auto
+}
+.is-linear .explorer {
+  position:sticky;
+  top:24px
 }
 @media(min-width:1450px) {
   :root {
@@ -773,18 +978,19 @@ only the content of each face scrolls. */
 }
 @media(max-width:760px) {
   :root {
-    --size:calc(100vw - 40px)
+    --size:min(610px,calc(100vw - 40px))
   }
   .site-header {
     padding:20px
   }
   .brand {
-    font-size:10px;
+    font-size:12px;
+    letter-spacing:.5px;
     gap:10px
   }
   .brand small {
-    font-size:8px;
-    letter-spacing:1px;
+    font-size:12px;
+    letter-spacing:0;
     max-width:180px
   }
   .brand>.die-pips {
@@ -806,36 +1012,57 @@ only the content of each face scrolls. */
   }
   .explorer {
     padding:0;
-    width:100%
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 132px;
+    column-gap:16px
   }
   .explorer>.eyebrow {
-    font-size:9px;
+    grid-column:1/-1;
+    font-size:12px;
     margin-bottom:9px
   }
   .explorer h1 {
+    grid-column:1;
+    grid-row:2;
     font-size:26px;
     white-space:normal;
     margin-bottom:10px
   }
   .explorer-note {
+    grid-column:1;
+    grid-row:3;
     max-width:none;
-    font-size:12px;
+    font-size:14px;
     margin-bottom:16px
   }
+  .explorer .view-switch {
+    grid-column:1/-1;
+    grid-row:4;
+    margin:18px 0
+  }
+  .explorer .die-map {
+    grid-column:2;
+    grid-row:2/4;
+    align-self:center;
+    margin:0
+  }
   .face-navigation {
+    grid-column:1/-1;
+    grid-row:5;
     display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:6px
   }
-  .face-navigation button {
+  .face-navigation :is(button,a) {
     padding:10px 8px;
-    font-size:10px;
+    font-size:13px;
     gap:7px;
     min-height:48px;
     border-color:var(--line)
   }
-  .face-navigation button small {
-    font-size:8px
+  .face-navigation :is(button,a) small {
+    font-size:12px
   }
 
   .face-navigation .die-pips {
@@ -847,7 +1074,7 @@ only the content of each face scrolls. */
     width:100%
   }
   .scene-caption {
-    font-size:8px
+    font-size:12px
   }
   .cube-scene {
     perspective:1200px
@@ -871,7 +1098,7 @@ only the content of each face scrolls. */
   }
   .face-footnote {
     padding:9px 20px;
-    font-size:7px
+    font-size:12px
   }
   .site-footer {
     margin:0 20px;
@@ -883,44 +1110,112 @@ only the content of each face scrolls. */
     gap:8px
   }
   .language>span {
-    font-size:10px
+    font-size:12px
   }
   .avatar {
     width:70px;
     height:90px
   }
   .occupation {
-    font-size:13px
+    font-size:14px
   }
   .cube-face {
     border-radius:8px
   }
   .education-tabs button {
-    font-size:12px
+    font-size:13px
   }
   .education-tabs small {
-    font-size:10px
+    font-size:12px
   }
   .contact-details {
-    font-size:12px
+    font-size:13px
   }
   .face-scroll:focus {
     outline-offset:-3px
   }
-
-}
-@media(min-width:651px) and (max-width:760px) {
-  :root {
-    --size:610px
+  .is-linear .explorer {
+    position:static;
+    grid-template-columns:1fr
   }
 
+}
+@media(max-width:400px) {
+  .site-header {
+    flex-wrap:wrap;
+    gap:14px
+  }
+  .identity {
+    gap:10px
+  }
+  .identity h2 {
+    font-size:28px;
+    letter-spacing:-1px
+  }
+  .avatar {
+    width:58px;
+    height:74px
+  }
+  .face-scroll {
+    padding:16px
+  }
+  .face-header,.face-footnote {
+    padding:12px 16px
+  }
+  .work-card,.technology-panel,.work-empty {
+    padding:16px
+  }
+  .education-tabs {
+    grid-template-columns:1fr
+  }
+  .soft-skill-summary {
+    padding:14px;
+    gap:10px
+  }
+  .soft-skill-icon {
+    width:36px;
+    min-height:48px
+  }
+  .soft-skill-title {
+    font-size:15px
+  }
 }
 @media(prefers-reduced-motion:reduce) {
-  .cube {
-    transition:none
-  }
   * {
     scroll-behavior:auto!important
   }
 
+}
+@media(max-width:360px) {
+  .explorer h1 {
+    grid-column:1/-1
+  }
+  .explorer .die-map {
+    grid-row:3
+  }
+  .explorer-note {
+    align-self:center
+  }
+}
+@media print {
+  .site-header,.explorer,.scene-caption,.cube,.site-footer {
+    display:none
+  }
+  .portfolio-layout,.cube-column,.cube-scene {
+    display:block;
+    width:auto;
+    height:auto;
+    padding:0;
+    perspective:none
+  }
+  .cube-face.face-interactive,.cube-face.face-interactive[hidden] {
+    display:block!important;
+    position:static;
+    visibility:visible;
+    margin-bottom:24px;
+    break-inside:avoid
+  }
+  .face-scroll {
+    overflow:visible
+  }
 }
