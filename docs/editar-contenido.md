@@ -57,9 +57,9 @@ Para una soft skill, añade un objeto en `softSkills.items`:
 
 Para respaldarla con una experiencia concreta, puedes añadir `evidence` (logro o actividad), `application` (su utilidad en ingeniería) y `tags` (lista de habilidades). Usa hechos que puedas explicar: nombre del evento, año, tu participación y resultado cuando los tengas. La etiqueta sobre la aplicación profesional se edita en `softSkills.applicationLabel`. No necesitas inventar métricas ni añadir estas propiedades a todas las entradas.
 
-El título y el logro se muestran siempre. Al pulsar la fila, con ratón, pantalla táctil, Intro o Espacio, se despliega la explicación. No depende de pasar el cursor por encima.
+Las habilidades se presentan en una barra de iconos. Al pasar el cursor o enfocar un icono se muestra su título, logro y explicación. También se pueden abrir con un toque, Intro o Espacio, y cerrar con Escape.
 
-El campo opcional `icon` admite `listening`, `communication`, `gamepad`, `resilience` o `idea`. Si no lo añades, se muestra una bombilla. El icono es independiente del `id`, por lo que puedes añadir habilidades sin modificar los componentes.
+El campo opcional `icon` admite `listening`, `communication`, `creativity`, `resilience` o `idea`. Si no lo añades, se muestra una bombilla. El icono es independiente del `id`, por lo que puedes añadir habilidades sin modificar los componentes.
 
 Las tecnologías se editan en cada proyecto o experiencia, en `src/content/work.ts`. El bloque antiguo `hardSkills.groups` se ha eliminado porque ya no se mostraba en la web.
 
@@ -85,12 +85,14 @@ Los ejemplos de esta guía son ilustrativos; no se han añadido como datos reale
 
 ## Añadir experiencia laboral
 
-La lista `experience` de `src/content/work.ts` está vacía hasta que añadas datos reales. Puedes copiar este formato:
+Edita la lista `experience` de `src/content/work.ts`. Puedes copiar este formato:
 
 ```ts
 export const experience: WorkEntry[] = [
   {
     id: 'empresa-puesto',
+    startDate: '2024-07-01',
+    endDate: '',
     title: {
       es: 'Puesto · Empresa',
       en: 'Role · Company',
@@ -105,6 +107,8 @@ export const experience: WorkEntry[] = [
   },
 ];
 ```
+
+Las fechas admiten `AAAA-MM-DD` o `AAAA-MM` (se toma el día 1). Se muestran sin año; deja `endDate` vacío u omítelo para mostrar Actualidad / Present / Heute.
 
 Se publican las entradas que tienen título y descripción en el idioma seleccionado. Una entrada vacía o una traducción todavía sin escribir no genera una tarjeta con textos de relleno. Si no hay ninguna entrada publicable, se muestra el mensaje `work.emptyExperience` del idioma actual. Añade las tres traducciones para que la experiencia aparezca en todos los idiomas.
 

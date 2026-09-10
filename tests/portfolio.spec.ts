@@ -4,7 +4,10 @@ import { expect, test, type Page } from '@playwright/test';
 const sectionIds = ['contact', 'projects', 'education', 'experience', 'soft', 'personal'] as const;
 
 async function openSection(page: Page, id: typeof sectionIds[number]) {
-  await page.locator(`.face-navigation a[href="#${id}"]`).click();
+  const dieControl = page.locator(`.die-map .map-${id}`);
+  const indexControl = page.locator(`.face-navigation a[href="#${id}"]`);
+  if (await dieControl.isVisible()) await dieControl.click();
+  else await indexControl.click();
   await expect(page).toHaveURL(new RegExp(`#${id}$`));
   await expect(page.locator(`.face-interactive.face-${id}`)).toBeVisible();
 }
@@ -21,7 +24,7 @@ test('direct links, keyboard navigation and browser history select the right sec
   // Inactive content stays mounted without leaking into the tab order.
   await expect(page.locator('.face-interactive')).toHaveCount(6);
   await expect(page.locator('.face-interactive:visible')).toHaveCount(1);
-  const projects = page.locator('.face-navigation a[href="#projects"]');
+  const projects = page.locator('.die-map .map-projects');
   await projects.focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#projects$/);
@@ -67,9 +70,10 @@ test('rapid navigation and interrupted language rolls do not lock controls', asy
   await expect(page.getByRole('link', { name: /josegonzb@gmail.com/ })).toBeVisible();
 });
 
-test('empty experience uses an intentional message and projects retain their statuses', async ({ page }) => {
+test('published experience shows its dates and projects retain their statuses', async ({ page }) => {
   await page.goto('./#experience');
-  await expect(page.locator('.face-experience .work-card')).toHaveCount(0);
+  await expect(page.locator('.face-experience .work-card')).toHaveCount(1);
+  await expect(page.locator('.face-experience .work-dates')).toContainText('jul - Actualidad');
   await expect(page.locator('.face-experience')).not.toContainText('Por completar');
   await openSection(page, 'projects');
   await expect(page.locator('.face-projects .work-card')).toHaveCount(3);
@@ -99,22 +103,36 @@ test('enabling reduced motion during a roll cancels animation without losing nav
   await expect(page.locator('.face-interactive.face-projects')).toBeVisible();
 });
 
-test('linear view exposes every section and preserves selected content when returning', async ({ page }) => {
-  await page.goto('./#education');
+test('linear view exposes every section and uses the index for navigation', async ({ page }) => {
+  await page.goto('./?view=linear&lang=en#education');
+  await expect(page.locator('.face-interactive:visible')).toHaveCount(6);
+  await expect(page.locator('.die-map')).toHaveCount(0);
+  await expect(page.locator('.face-navigation')).toBeVisible();
+  await expect(page.locator('.face-education')).toBeVisible();
   await page.locator('.education-tabs button').last().click();
   const selectedId = await page.locator('.education-tabs button').last().getAttribute('id');
-  await page.getByRole('button', { name: 'Vista lineal', exact: true }).click();
-  await expect(page.locator('.face-interactive:visible')).toHaveCount(6);
-  await page.locator('.face-navigation a[href="#personal"]').click();
-  await expect(page).toHaveURL(/#personal$/);
-  await page.getByRole('button', { name: 'Vista dado', exact: true }).click();
-  await expect(page.locator('.face-interactive:visible')).toHaveCount(1);
-  await expect(page.locator('.face-interactive.face-personal')).toBeVisible();
+  await openSection(page, 'personal');
+  await expect(page).toHaveURL(/view=linear/);
   await openSection(page, 'education');
-  await expect(page.locator(`#${selectedId}`)).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#' + selectedId)).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Cube view', exact: true }).click();
+  await expect(page.locator('.face-interactive:visible')).toHaveCount(1);
+  await expect(page.locator('.die-map')).toBeVisible();
+  await expect(page.locator('.face-navigation')).toBeVisible();
 });
 
-test('all cube faces and the complete linear view pass automated accessibility checks', async ({ page }) => {
+test('arrow keys rotate the die to adjacent sections', async ({ page }) => {
+  await page.goto('./#contact');
+  const scene = page.locator('.cube-scene');
+  await scene.focus();
+  await page.keyboard.press('ArrowLeft');
+  await expect(page.locator('.face-projects')).toBeVisible();
+  await scene.focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.locator('.face-experience')).toBeVisible();
+});
+
+test('cube and linear views pass automated accessibility checks', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./');
   for (const id of sectionIds) {
@@ -132,15 +150,37 @@ test.describe('touch interaction', () => {
 
   test('soft-skill evidence opens and closes with a tap', async ({ page }) => {
     await page.goto('./#soft');
-    const details = page.locator('.face-soft details');
-    expect(await details.count()).toBeGreaterThan(0);
-    for (const detail of await details.all()) {
-      await detail.locator('summary').tap();
-      await expect(detail).toHaveAttribute('open', '');
-      await detail.locator('summary').tap();
-      await expect(detail).not.toHaveAttribute('open', '');
+    const buttons = page.locator('.face-soft .soft-skill-icon');
+    expect(await buttons.count()).toBeGreaterThan(0);
+    for (const button of await buttons.all()) {
+      await button.tap();
+      await expect(button).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.locator('.face-soft .soft-skill-panel:visible')).toHaveCount(1);
+      await button.tap();
+      await expect(button).toHaveAttribute('aria-expanded', 'false');
     }
   });
+});
+
+test('soft skills reveal on hover and keyboard focus, and dismiss with Escape', async ({ page }) => {
+  await page.goto('./#soft');
+  const buttons = page.locator('.face-soft .soft-skill-icon');
+  const panels = page.locator('.face-soft .soft-skill-panel:visible');
+  await expect(panels).toHaveCount(0);
+  await buttons.first().hover();
+  await expect(panels).toHaveCount(1);
+  await panels.hover();
+  await expect(panels).toHaveCount(1);
+  await buttons.nth(1).hover();
+  await expect(buttons.first()).toHaveAttribute('aria-expanded', 'false');
+  await expect(buttons.nth(1)).toHaveAttribute('aria-expanded', 'true');
+  await page.locator('.face-soft h2').hover();
+  await expect(panels).toHaveCount(0);
+  await buttons.first().focus();
+  await page.keyboard.press('Tab');
+  await expect(buttons.nth(1)).toHaveAttribute('aria-expanded', 'true');
+  await page.keyboard.press('Escape');
+  await expect(panels).toHaveCount(0);
 });
 
 for (const width of [320, 390, 680, 768, 1024, 1440]) {

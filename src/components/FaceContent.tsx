@@ -63,7 +63,7 @@ export function FaceContent({ id }: { id: FaceId }) {
         <div className="tags">{t.personal.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
         <figure className="personal-photo">
           {personalPhoto
-            ? <img src={publicAsset(personalPhoto)} alt={t.personal.photoCaption} width="640" height="400" loading="lazy"/>
+            ? <img src={publicAsset(personalPhoto)} alt={t.personal.photoCaption} width="478" height="478" loading="lazy" decoding="async"/>
             : <div className="photo-placeholder"><Camera size={28} strokeWidth={1}/><span>{t.personal.photoPlaceholder}</span></div>}
           <figcaption>{t.personal.photoCaption}</figcaption>
         </figure>

@@ -146,7 +146,7 @@ export const es = {
       },
       {
         "id": "game-jams",
-        "icon": "gamepad",
+        "icon": "creativity",
         "title": "Creatividad y adaptación",
         "evidence": "Participación en varias game jams",
         "description": "He participado en varias game jams, llevando mi interés por el desarrollo de videojuegos a un entorno de creación con tiempo limitado.",
@@ -180,7 +180,7 @@ export const es = {
       "Deporte",
       "Equilibrio"
     ],
-    "photoCaption": "Un momento para desconectar",
+    "photoCaption": "Escalada junto al mar: un momento para desconectar.",
     "photoPlaceholder": "Espacio reservado para una foto personal"
   }
 } satisfies PortfolioTranslation;

@@ -5,4 +5,4 @@ export const socialProfiles: { name: 'LinkedIn' | 'GitHub'; url: string }[] = [
 ];
 
 // Set a local public asset path when the personal photo is supplied.
-export const personalPhoto: string = '';
+export const personalPhoto: string = 'escalada-personal.png';

@@ -23,7 +23,7 @@ export interface EducationEntry<Id extends string = string> {
 }
 
 /** Iconos disponibles. Los ids de las habilidades se pueden editar libremente. */
-export type SoftSkillIcon = 'listening' | 'communication' | 'gamepad' | 'resilience' | 'idea';
+export type SoftSkillIcon = 'listening' | 'communication' | 'creativity' | 'resilience' | 'idea';
 
 export interface PortfolioTranslation<EducationId extends string = string> {
   projectStatuses: Record<ProjectStatus, string>;

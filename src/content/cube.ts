@@ -30,30 +30,38 @@ type Copy = {
     linearView: string;
     outside: string;
     turn: string;
+    keyboardHint: string;
     navigation: string;
     hint: string;
     entryTitle: string;
     description: string;
     technologies: string;
     pending: string;
+    present: string;
 };
 export const cubeCopy: Record<Locale, Copy> = {
     es: {
         viewLabel: 'Modo de lectura', cubeView: 'Vista dado', linearView: 'Vista lineal',
+        present: 'Actualidad',
         title: 'Una persona.\nSeis perspectivas.', subtitle: 'INGENIERÍA CON OTRA PERSPECTIVA', face: 'Cara',
         labels: { contact: 'Contacto', projects: 'Proyectos', experience: 'Experiencia laboral', education: 'Formación', soft: 'Soft skills', personal: 'Fuera de la oficina' },
+        keyboardHint: 'Usa las flechas para girar el dado',
         projectsTitle: 'Ideas que toman forma.', experienceTitle: 'Mi trayectoria profesional.', outside: 'La otra parte de mí.', turn: 'SEIS CARAS · UNA HISTORIA', navigation: 'Navegación del dado', hint: 'Elige una sección en el índice o pulsa una cara del dado.', entryTitle: 'Título', description: 'Descripción', technologies: 'Tecnologías utilizadas', pending: 'Por completar',
     },
     en: {
         viewLabel: 'Reading mode', cubeView: 'Cube view', linearView: 'Linear view',
+        present: 'Present',
         title: 'One person.\nSix perspectives.', subtitle: 'ENGINEERING FROM ANOTHER ANGLE', face: 'Face',
         labels: { contact: 'Contact', projects: 'Projects', experience: 'Work experience', education: 'Education', soft: 'Soft skills', personal: 'Outside the office' },
+        keyboardHint: 'Use the arrow keys to turn the die',
         projectsTitle: 'Ideas taking shape.', experienceTitle: 'My professional journey.', outside: 'The other side of me.', turn: 'SIX FACES · ONE STORY', navigation: 'Die navigation', hint: 'Choose a section from the index or select a face of the die.', entryTitle: 'Title', description: 'Description', technologies: 'Technologies used', pending: 'To be completed',
     },
     de: {
         viewLabel: 'Lesemodus', cubeView: 'Würfelansicht', linearView: 'Listenansicht',
+        present: 'Heute',
         title: 'Ein Mensch.\nSechs Perspektiven.', subtitle: 'ENTWICKLUNG AUS EINEM ANDEREN BLICKWINKEL', face: 'Seite',
         labels: { contact: 'Kontakt', projects: 'Projekte', experience: 'Berufserfahrung', education: 'Ausbildung', soft: 'Soft Skills', personal: 'Abseits der Arbeit' },
+        keyboardHint: 'Mit den Pfeiltasten den Würfel drehen',
         projectsTitle: 'Ideen nehmen Gestalt an.', experienceTitle: 'Mein beruflicher Werdegang.', outside: 'Meine andere Seite.', turn: 'SECHS SEITEN · EINE GESCHICHTE', navigation: 'Würfelnavigation', hint: 'Wähle einen Abschnitt im Menü oder eine Seite des Würfels.', entryTitle: 'Titel', description: 'Beschreibung', technologies: 'Verwendete Technologien', pending: 'Noch zu ergänzen',
     },
 };

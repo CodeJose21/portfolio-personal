@@ -147,7 +147,7 @@ export const en = {
       },
       {
         "id": "game-jams",
-        "icon": "gamepad",
+        "icon": "creativity",
         "title": "Creativity and adaptability",
         "evidence": "Participation in several game jams",
         "description": "I have participated in several game jams, taking my interest in game development into a time-limited creative setting.",
@@ -181,7 +181,7 @@ export const en = {
       "Sport",
       "Balance"
     ],
-    "photoCaption": "A moment to disconnect",
+    "photoCaption": "Climbing by the sea: a moment to switch off.",
     "photoPlaceholder": "Space reserved for a personal photo"
   }
 } satisfies PortfolioTranslation<EducationId>;

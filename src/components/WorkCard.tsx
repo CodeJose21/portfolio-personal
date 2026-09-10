@@ -15,6 +15,16 @@ export function WorkCard({ entry, index }: { entry: WorkEntry; index: number }) 
         : !entry.title[locale] && <small>{c.pending}</small>}
     </div>
     <h3>{entry.title[locale] || c.entryTitle}</h3>
+    {(entry.startDate !== undefined || entry.endDate !== undefined) && <div className="work-dates">
+      {(['startDate', 'endDate'] as const).map(field => <span key={field}>
+        {field === 'endDate' && ' - '}
+        {entry[field]
+          ? <time dateTime={entry[field]}>{new Intl.DateTimeFormat(locale, {
+              day: 'numeric', month: 'short', timeZone: 'UTC',
+            }).format(new Date(entry[field]))}</time>
+          : field === 'endDate' ? c.present : c.pending}
+      </span>)}
+    </div>}
     <p className={!entry.description[locale] ? 'placeholder-copy' : ''}>{entry.description[locale] || c.description}</p>
     <div className="technology-panel">
       <div className="technology-heading"><Braces size={21}/><span>{c.technologies}</span></div>

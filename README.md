@@ -36,9 +36,9 @@ La [guía para editar contenido](docs/editar-contenido.md) incluye ejemplos para
 
 ## Navegación y accesibilidad
 
-El índice tiene enlaces reales a `#contact`, `#projects`, `#education`, `#experience`, `#soft` y `#personal`. La URL conserva idioma (`?lang=en`) y vista (`?view=linear`). Se puede copiar un enlace directo, recargar y usar atrás/adelante. Redux refleja esa navegación y conserva la etapa educativa mientras se usa la aplicación.
+El índice tiene enlaces reales a `#contact`, `#projects`, `#education`, `#experience`, `#soft` y `#personal`. La URL conserva idioma (`?lang=en`). Se puede copiar un enlace directo, recargar y usar atrás/adelante. Redux refleja esa navegación y conserva la etapa educativa mientras se usa la aplicación.
 
-La vista lineal expone todas las secciones en el flujo del documento. En la vista dado, el contenido permanece montado en superficies planas; las caras inactivas están ocultas. La geometría 3D es decorativa y no intercepta clics. Las soft skills se expanden con clic, toque, Enter o Espacio. El movimiento reducido elimina los giros. Las fuentes del sistema evitan peticiones a Google Fonts.
+En la vista dado, el contenido permanece montado en superficies planas; las caras inactivas están ocultas. La geometría 3D es decorativa y no intercepta clics. Las soft skills se despliegan al pasar el cursor o enfocar sus iconos, y admiten clic, toque, Enter, Espacio y Escape. El movimiento reducido elimina los giros. Las fuentes del sistema evitan peticiones a Google Fonts.
 
 ## Comprobaciones
 

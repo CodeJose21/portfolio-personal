@@ -176,6 +176,34 @@ button[aria-disabled=true] {
   max-width:215px;
   margin-bottom:28px
 }
+.view-switch {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:22px 0;
+  padding:5px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:var(--surface)
+}
+.view-switch button {
+  flex:1 1 84px;
+  min-height:44px;
+  padding:9px 10px;
+  font-size:13px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background:transparent;
+  color:var(--muted)
+}
+.view-switch button[aria-pressed=true] {
+  background:var(--brand);
+  color:#21180f;
+  font-weight:600
+}
+.view-switch button:hover {
+  border-color:var(--brand)
+}
 .face-navigation {
   display:flex;
   flex-direction:column;
@@ -211,36 +239,39 @@ button[aria-disabled=true] {
   margin-top:4px;
   color:var(--muted)
 }
-.view-switch {
-  display:flex;
-  flex-wrap:wrap;
+.cube-index {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:3px 10px;
+  width:min(100%,240px);
+  margin:3px auto 0
+}
+.cube-index :is(button,a) {
+  min-height:30px;
+  justify-content:flex-start;
   gap:6px;
-  margin:22px 0;
-  padding:5px;
-  border:1px solid var(--line);
-  border-radius:7px;
-  background:var(--surface)
-}
-.view-switch button {
-  flex:1 1 84px;
-  min-height:44px;
-  padding:9px 10px;
-  font-size:13px;
-  border:1px solid transparent;
-  border-radius:4px;
+  padding:3px 0;
+  border-color:transparent;
   background:transparent;
-  color:var(--muted)
+  text-align:left;
+  font-size:11px;
+  line-height:1.2
 }
-.view-switch button[aria-pressed=true] {
-  background:var(--brand);
-  color:#21180f;
-  font-weight:600
+.cube-index :is(button,a)[aria-current] {
+  box-shadow:none;
+  background:transparent;
+  border-color:transparent;
+  color:#f1d2aa
 }
-.view-switch button:hover {
-  border-color:var(--brand)
+.cube-index :is(button,a):hover {
+  background:transparent;
+  color:var(--brand)
 }
-
-
+.cube-index .die-pips {
+  width:12px;
+  height:12px;
+  gap:2px
+}
 .die-pips {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -582,6 +613,11 @@ button[aria-disabled=true] {
   color:var(--muted);
   min-height:42px
 }
+.work-dates {
+  margin:16px 0 20px;
+  font-size:13px;
+  color:var(--brand)
+}
 .work-empty {
   padding:28px;
   border:1px solid var(--line);
@@ -653,53 +689,36 @@ button[aria-disabled=true] {
 }
 .soft-list {
   display:grid;
-  gap:14px
+  gap:0
 }
-.soft-skill {
-  border:1px solid var(--line);
-  border-radius:8px;
-  background:#282119
-}
-.soft-skill-summary {
+.soft-skill-menu {
   display:flex;
-  align-items:center;
-  gap:14px;
-  min-height:72px;
-  padding:18px;
-  list-style:none;
-  cursor:pointer;
-  border-radius:8px
-}
-.soft-skill-summary::-webkit-details-marker {
-  display:none
-}
-.soft-skill-summary:hover {
-  background:#35291e
-}
-.soft-skill-title {
-  display:block;
-  margin:0 0 5px;
-  font-size:17px;
-  font-weight:600;
-  line-height:1.4
-}
-.soft-skill-heading {
-  flex:1;
-  min-width:0
+  gap:10px;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#211a14
 }
 .soft-skill-icon {
   display:flex;
-  flex-shrink:0;
+  flex:1;
+  min-width:44px;
+  min-height:76px;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:5px;
-  width:48px;
-  min-height:54px;
+  gap:7px;
+  padding:10px;
   color:var(--brand);
-  border:1px solid #8b6b47;
-  border-radius:6px;
-  background:#211a14
+  border:1px solid transparent;
+  border-radius:9px;
+  background:transparent;
+  transition:background .18s ease,border-color .18s ease,color .18s ease
+}
+.soft-skill-icon:hover,.soft-skill-icon[aria-expanded=true] {
+  background:#3b2d1e;
+  border-color:#8b6b47;
+  color:#f1d2aa
 }
 .soft-skill-icon span {
   font-family:monospace;
@@ -707,23 +726,30 @@ button[aria-disabled=true] {
   color:var(--muted)
 }
 .soft-skill-panel {
-  padding:18px;
-  border-top:1px solid var(--line)
+  margin-top:12px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:linear-gradient(135deg,#30261c,#231e18);
+  animation:skill-reveal .18s ease-out
 }
-.soft-skill-toggle {
-  width:20px;
-  height:20px;
-  color:var(--brand)
+@keyframes skill-reveal {
+  from { opacity:0; transform:translateY(-4px) }
+  to { opacity:1; transform:translateY(0) }
 }
-.soft-skill[open] .soft-skill-toggle {
-  transform:rotate(180deg)
+.soft-skill-title {
+  line-height:1.4
 }
 .soft-list .skill-evidence {
   display:block;
   color:var(--brand);
   font-weight:600;
   font-size:13px;
-  margin-bottom:0
+  margin-bottom:16px
+}
+@media(prefers-reduced-motion:reduce) {
+  .soft-skill-icon { transition:none }
+  .soft-skill-panel { animation:none }
 }
 .skill-application {
   border-left:2px solid var(--brand);
@@ -751,14 +777,18 @@ button[aria-disabled=true] {
   margin-bottom:0
 }
 .personal-photo {
-  margin:28px 0 0
+  width:min(100%,270px);
+  margin:28px auto 0
 }
 .personal-photo img {
+  display:block;
   width:100%;
   height:auto;
-  max-height:240px;
+  aspect-ratio:1;
   object-fit:cover;
-  border-radius:6px
+  object-position:center 40%;
+  border-radius:8px;
+  border:1px solid var(--line)
 }
 .photo-placeholder {
   height:190px;
@@ -892,7 +922,7 @@ button[aria-disabled=true] {
   font-size:12px;
   color:var(--muted)
 }
-/* The reading view shares the same content and state, without nested scrolling. */
+/* The linear view shares content and navigation state without nested scrolling. */
 .linear-sections {
   display:grid;
   gap:28px;
@@ -915,10 +945,14 @@ button[aria-disabled=true] {
   top:24px
 }
 @media(min-width:1450px) {
+  .site-header {
+    max-width:1700px
+  }
   :root {
     --size:700px
   }
   .portfolio-layout {
+    max-width:1700px;
     padding-top:65px;
     gap:85px
   }
@@ -1054,6 +1088,11 @@ button[aria-disabled=true] {
     grid-template-columns:repeat(2,minmax(0,1fr));
     gap:6px
   }
+  .cube-index {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:min(100%,240px);
+    margin:3px auto 0
+  }
   .face-navigation :is(button,a) {
     padding:10px 8px;
     font-size:13px;
@@ -1138,7 +1177,6 @@ button[aria-disabled=true] {
     position:static;
     grid-template-columns:1fr
   }
-
 }
 @media(max-width:400px) {
   .site-header {
@@ -1168,11 +1206,7 @@ button[aria-disabled=true] {
   .education-tabs {
     grid-template-columns:1fr
   }
-  .soft-skill-summary {
-    padding:14px;
-    gap:10px
-  }
-  .soft-skill-icon {
+.soft-skill-icon {
     width:36px;
     min-height:48px
   }
