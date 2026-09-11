@@ -1,62 +1,122 @@
-# Portfolio · Jose González Blanco
+# Jose González Blanco · Portfolio
 
-Portfolio en español, inglés y alemán con React, TypeScript, Redux Toolkit y Vite. Incluye un dado de seis caras con giros 3D, una vista lineal accesible y una paleta camel oscura.
+An interactive, multilingual portfolio built around a six-sided 3D die. Each face presents a different part of my profile: contact, projects, education, professional experience, soft skills, and life outside work.
 
-## Ejecutar y compilar
+[View the live portfolio](https://codejose21.github.io/portfolio-personal/) · [LinkedIn](https://www.linkedin.com/in/jose-gonz%C3%A1lez-blanco-950aa5227) · [GitHub](https://github.com/CodeJose21)
 
-Con Node.js 22.13+ (o Node.js 24 LTS) y npm:
+## About the project
 
-```sh
+I am a Full Stack and Machine Learning engineer who enjoys connecting software, data, and people to create useful real-world solutions. This portfolio translates that idea into an interface with two complementary ways to explore the content:
+
+- **Die view** — navigate between six animated 3D faces.
+- **Linear view** — read the same content in a conventional, accessible layout.
+
+The site is available in Spanish, English, and German. Language and section selections are reflected in the URL, so every view can be bookmarked or shared directly.
+
+## Highlights
+
+- Responsive 3D navigation with keyboard, mouse, and touch support.
+- Spanish, English, and German content from a typed translation model.
+- Six portfolio areas: contact, projects, education, experience, soft skills, and personal interests.
+- URL-based navigation with browser history support.
+- Reduced-motion support and a skip link for keyboard users.
+- Automated end-to-end and accessibility checks with Playwright and axe.
+- Continuous deployment to GitHub Pages after linting, building, and testing.
+
+## Built with
+
+| Area | Technology |
+| --- | --- |
+| UI | React 19, TypeScript, CSS |
+| State | Redux Toolkit, React Redux |
+| Build | Vite |
+| Icons | Lucide React |
+| Quality | ESLint, Playwright, axe-core |
+| Hosting | GitHub Pages, GitHub Actions |
+
+## Run locally
+
+You will need Node.js 22.13 or newer and npm.
+
+```bash
+git clone https://github.com/CodeJose21/portfolio-personal.git
+cd portfolio-personal
 npm ci
 npm run dev
 ```
 
-Para comprobar la versión de producción:
+Open the local address shown by Vite. The development server uses `/`; production and preview builds use `/portfolio-personal/` for GitHub Pages.
 
-```sh
-npm run build
-npm run preview
-```
+## Available commands
 
-`build` comprueba TypeScript y genera `dist/`. En la vista previa abre la dirección indicada por Vite con `/portfolio-personal/`. En PowerShell, si se bloquea `npm`, utiliza `npm.cmd`.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Type-check and create the production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run the code-quality checks |
+| `npm test` | Run the Playwright test suite |
+| `npm run test:report` | Open the latest Playwright HTML report |
 
-## Editar contenido
+To run the browser tests for the first time, install Chromium once:
 
-- `src/content/work.ts`: proyectos y experiencia; título y descripción en `es`, `en` y `de`, y tecnologías. Duplica entradas con identificadores únicos para añadir tarjetas.
-- `src/content/locales/es.ts`, `en.ts` y `de.ts`: presentación, idiomas, habilidades, educación y contenido personal, agrupados por sección. Cada entrada reúne todos sus campos.
-- `src/content/translations.ts`: conecta los tres idiomas; no se modifica para añadir entradas.
-- `src/content/profile.ts`: enlaces sociales y fotografía personal opcional.
-- `src/content/cube.ts`: nombres de caras, navegación y orientación del dado.
-- `src/styles.css`: colores, tamaños y diseño adaptable.
-- `public/`: imágenes, referenciadas mediante `publicAsset` para respetar la ruta de GitHub Pages.
-
-Los proyectos incluyen su estado y contenido en los tres idiomas. La experiencia permanece vacía hasta que añadas información: se muestra un mensaje intencional y solo se publican entradas con título y descripción en el idioma seleccionado. No hay un editor dentro de la web: se modifica el repositorio y se vuelve a compilar.
-
-La [guía para editar contenido](docs/editar-contenido.md) incluye ejemplos para añadir formación, habilidades e idiomas. Los botones educativos se generan a partir de los datos, sin editar componentes ni el estado global.
-
-## Navegación y accesibilidad
-
-El índice tiene enlaces reales a `#contact`, `#projects`, `#education`, `#experience`, `#soft` y `#personal`. La URL conserva idioma (`?lang=en`). Se puede copiar un enlace directo, recargar y usar atrás/adelante. Redux refleja esa navegación y conserva la etapa educativa mientras se usa la aplicación.
-
-En la vista dado, el contenido permanece montado en superficies planas; las caras inactivas están ocultas. La geometría 3D es decorativa y no intercepta clics. Las soft skills se despliegan al pasar el cursor o enfocar sus iconos, y admiten clic, toque, Enter, Espacio y Escape. El movimiento reducido elimina los giros. Las fuentes del sistema evitan peticiones a Google Fonts.
-
-## Comprobaciones
-
-```sh
-npm run lint
-npm run build
+```bash
 npx playwright install chromium
 npm test
 ```
 
-La descarga de Chromium solo es necesaria la primera vez o al actualizar Playwright. Las pruebas arrancan Vite si no está abierto; cubren navegación, idiomas, contenido, teclado/táctil, movimiento reducido, axe y tamaños de 320 a 1440 píxeles. Generan capturas para revisar el aspecto, sin comparaciones contra imágenes de referencia. `npm run test:report` abre el informe de resultados.
+## Project structure
 
-El workflow de GitHub ejecuta las comprobaciones antes de desplegar y prueba la compilación bajo `/portfolio-personal/`. Al ejecutar las pruebas localmente, los informes y capturas quedan disponibles en `playwright-report/`.
+```text
+src/
+├── components/        Reusable portfolio sections and UI
+├── content/           Profile, project, translation, and die data
+│   └── locales/       Spanish, English, and German copy
+├── hooks/             Navigation and die-motion behaviour
+├── store/             Redux state and typed hooks
+├── App.tsx            Application shell
+└── styles.css         Visual system and responsive layout
+public/                Photos, flags, and static assets
+tests/                 Playwright end-to-end tests
+docs/                  Content editing and design notes
+```
 
-## GitHub Pages
+## Editing the portfolio
 
-El workflow `.github/workflows/deploy.yml` compila y publica únicamente `dist/`. Mantén **Settings → Pages → Source → GitHub Actions** y sube los cambios a `main` para activar el despliegue existente.
+Most updates are data changes rather than component changes:
 
-La ruta de producción sigue siendo [codejose21.github.io/portfolio-personal/](https://codejose21.github.io/portfolio-personal/). Vite conserva `/portfolio-personal/` como base. No publiques el `index.html` fuente: referencia TSX de desarrollo.
+- Edit projects and professional experience in `src/content/work.ts`.
+- Edit translated copy in `src/content/locales/es.ts`, `en.ts`, and `de.ts`.
+- Edit social profiles and the personal photo in `src/content/profile.ts`.
+- Add static images to `public/` and resolve them with the existing asset helper.
 
-Consulta la [revisión actual del proyecto](docs/informe-revision-proyecto.md) para conocer la valoración, los cambios y los límites de las comprobaciones. El [informe del rediseño](docs/informe-redisenio-dado.md) documenta el diseño inicial y puede describir comportamientos anteriores.
+Keep matching entry IDs across all three locale files so switching languages preserves the selected content. See [the content editing guide](docs/editar-contenido.md) for examples covering education, languages, skills, projects, and experience.
+
+## Accessibility and testing
+
+The test suite covers navigation, translated content, keyboard and touch interaction, reduced motion, automated axe checks, and responsive layouts from 320 to 1440 pixels. The 3D geometry is decorative: content remains on flat, interactive surfaces, and inactive faces are hidden from users and assistive technology.
+
+Run the complete local verification before publishing:
+
+```bash
+npm run lint
+npm run build
+npm test
+```
+
+## Deployment
+
+Pushes to `main` trigger the GitHub Actions workflow. It installs dependencies, checks the code, builds and tests the production site, then publishes only `dist/` to GitHub Pages.
+
+If you fork the project or rename the repository, update the production `base` path in `vite.config.ts` and configure **Settings → Pages → Source** to use **GitHub Actions**.
+
+## Author
+
+**Jose González Blanco** — Full Stack & Machine Learning Engineer
+
+- [LinkedIn](https://www.linkedin.com/in/jose-gonz%C3%A1lez-blanco-950aa5227)
+- [GitHub](https://github.com/CodeJose21)
+
+## License
+
+This repository does not currently include an open-source license. The source code and portfolio content remain copyright of Jose González Blanco.
