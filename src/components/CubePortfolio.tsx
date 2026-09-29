@@ -1,25 +1,10 @@
-import { useEffect, useRef, type CSSProperties, type KeyboardEvent, type MouseEvent } from 'react';
+import { useEffect, useRef, type CSSProperties, type MouseEvent } from 'react';
 import { cubeCopy, faceIds, faces, type FaceId } from '../content/cube';
 import { selectFace, setView, useAppDispatch, useAppSelector } from '../store';
 import { useCubeMotion } from '../hooks/useCubeMotion';
 import { DiePips } from './DiePips';
 import { FaceContent } from './FaceContent';
 import { translations } from '../content/translations';
-
-const horizontalDragTargets: Record<FaceId, { left: FaceId; right: FaceId }> = {
-  contact: { left: 'projects', right: 'soft' },
-  projects: { left: 'personal', right: 'contact' },
-  personal: { left: 'soft', right: 'projects' },
-  soft: { left: 'contact', right: 'personal' },
-  education: { left: 'projects', right: 'soft' },
-  experience: { left: 'projects', right: 'soft' },
-};
-
-function targetFromArrow(face: FaceId, key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown'): FaceId {
-  if (key === 'ArrowLeft') return horizontalDragTargets[face].left;
-  if (key === 'ArrowRight') return horizontalDragTargets[face].right;
-  return key === 'ArrowUp' ? 'education' : 'experience';
-}
 
 export function CubePortfolio() {
   const { locale, face, view } = useAppSelector(state => state.ui);
@@ -63,12 +48,6 @@ export function CubePortfolio() {
     navigate(target);
   }
 
-  function handleCubeKey(event: KeyboardEvent<HTMLDivElement>) {
-    if (linear || moving || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
-    event.preventDefault();
-    navigate(targetFromArrow(face, event.key as 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown'));
-  }
-
   return <main id="main" className={`portfolio-layout ${linear ? 'is-linear' : ''}`} tabIndex={-1}>
     <aside className="explorer">
       <p className="eyebrow">{copy.subtitle}</p>
@@ -92,10 +71,9 @@ export function CubePortfolio() {
       </nav>
     </aside>
     <div className="cube-column">
-      {!linear && <div className="scene-caption"><span>{copy.turn}</span><span>{copy.keyboardHint}</span><span>{faces[face].pips.toString().padStart(2, '0')} / 06</span></div>}
+      {!linear && <div className="scene-caption"><span>{copy.turn}</span><span>{faces[face].pips.toString().padStart(2, '0')} / 06</span></div>}
       <div className={linear ? 'linear-sections' : `cube-scene ${moving ? 'is-turning' : ''}`}
-        aria-busy={moving} tabIndex={linear ? undefined : 0} aria-label={linear ? undefined : copy.keyboardHint}
-        onKeyDown={handleCubeKey}>
+        aria-busy={moving} tabIndex={linear ? undefined : 0} aria-label={linear ? undefined : copy.navigation}>
         <div ref={cube} className="cube" hidden={linear} aria-hidden="true" inert
           style={{ '--rx': `${angle.x}deg`, '--ry': `${angle.y}deg` } as CSSProperties}>
           {moving && faceIds.map(id => <div key={id} className="cube-face" style={{ transform: `${faces[id].surface} translateZ(var(--half))` }}>

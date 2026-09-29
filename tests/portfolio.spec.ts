@@ -121,15 +121,17 @@ test('linear view exposes every section and uses the index for navigation', asyn
   await expect(page.locator('.face-navigation')).toBeVisible();
 });
 
-test('arrow keys rotate the die to adjacent sections', async ({ page }) => {
+test('arrow keys leave the selected cube section unchanged', async ({ page }) => {
   await page.goto('./#contact');
   const scene = page.locator('.cube-scene');
   await scene.focus();
   await page.keyboard.press('ArrowLeft');
-  await expect(page.locator('.face-projects')).toBeVisible();
+  await expect(page.locator('.face-contact')).toBeVisible();
+  await expect(page).toHaveURL(/#contact$/);
   await scene.focus();
   await page.keyboard.press('ArrowDown');
-  await expect(page.locator('.face-experience')).toBeVisible();
+  await expect(page.locator('.face-contact')).toBeVisible();
+  await expect(page).toHaveURL(/#contact$/);
 });
 
 test('cube and linear views pass automated accessibility checks', async ({ page }) => {
