@@ -121,6 +121,12 @@ test('linear view exposes every section and uses the index for navigation', asyn
   await expect(page.locator('.face-navigation')).toBeVisible();
 });
 
+test('cube view shows the die-map control', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('.die-map')).toBeVisible();
+  await expect(page.locator('.face-navigation')).toBeVisible();
+});
+
 test('arrow keys leave the selected cube section unchanged', async ({ page }) => {
   await page.goto('./#contact');
   const scene = page.locator('.cube-scene');
