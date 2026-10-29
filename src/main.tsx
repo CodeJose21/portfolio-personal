@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import App from './App';
 import './styles.css';
+import './phone.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><Provider store={store}><App /></Provider></StrictMode>,
