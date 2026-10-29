@@ -1,6 +1,6 @@
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from 'react';
 import { cubeCopy, faceIds, faces, type FaceId } from '../content/cube';
-import { selectFace, setView, useAppDispatch, useAppSelector } from '../store';
+import { selectFace, useAppDispatch, useAppSelector } from '../store';
 import { useCubeMotion } from '../hooks/useCubeMotion';
 import { DiePips } from './DiePips';
 import { FaceContent } from './FaceContent';
@@ -50,13 +50,8 @@ export function CubePortfolio() {
 
   return <main id="main" className={`portfolio-layout ${linear ? 'is-linear' : ''}`} tabIndex={-1}>
     <aside className="explorer">
-      <p className="eyebrow">{copy.subtitle}</p>
       <h1>{copy.title}</h1>
       <p className="explorer-note">{copy.hint}</p>
-      <div className="view-switch" role="group" aria-label={copy.viewLabel}>
-        <button type="button" aria-pressed={!linear} onClick={() => dispatch(setView('cube'))}>{copy.cubeView}</button>
-        <button type="button" aria-pressed={linear} onClick={() => dispatch(setView('linear'))}>{copy.linearView}</button>
-      </div>
       {!linear && <div className="die-map" role="group" aria-label={copy.navigation}>
         {faceIds.map(id => <button type="button" key={id} className={`map-${id}`}
           aria-label={`${faces[id].pips}. ${copy.labels[id]}`} title={`${faces[id].pips}. ${copy.labels[id]}`}
@@ -71,7 +66,6 @@ export function CubePortfolio() {
       </nav>
     </aside>
     <div className="cube-column">
-      {!linear && <div className="scene-caption"><span>{copy.turn}</span><span>{faces[face].pips.toString().padStart(2, '0')} / 06</span></div>}
       <div className={linear ? 'linear-sections' : `cube-scene ${moving ? 'is-turning' : ''}`}
         aria-busy={moving} tabIndex={linear ? undefined : 0} aria-label={linear ? undefined : copy.navigation}>
         <div ref={cube} className="cube" hidden={linear} aria-hidden="true" inert

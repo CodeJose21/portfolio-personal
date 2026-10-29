@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, Camera, Sparkles } from 'lucide-react';
+import { BriefcaseBusiness, Camera } from 'lucide-react';
 import { cubeCopy, type FaceId } from '../content/cube';
 import { translations } from '../content/translations';
 import { publicAsset } from '../content/assets';
@@ -20,7 +20,7 @@ export function FaceContent({ id }: { id: FaceId }) {
     case 'contact':
       return <div className="contact-face">
         <div className="identity">
-          <div><p className="eyebrow">{t.introduction.hello}</p><h2>Jose González<br/><em>Blanco.</em></h2></div>
+          <div><h2>Jose González<br/><em>Blanco.</em></h2></div>
           <img className="avatar" src={publicAsset('jose-gonzalez.jpg')} alt={t.introduction.portraitAlt} width="120" height="150"/>
         </div>
         <p className="occupation">{t.introduction.role}</p>
@@ -58,7 +58,6 @@ export function FaceContent({ id }: { id: FaceId }) {
       return <SoftSkills content={t.softSkills}/>;
     case 'personal':
       return <>
-        <p className="eyebrow"><Sparkles size={14}/>{c.outside}</p>
         <h2>{t.personal.title}</h2><p className="intro">{t.personal.description}</p>
         <div className="tags">{t.personal.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
         <figure className="personal-photo">
