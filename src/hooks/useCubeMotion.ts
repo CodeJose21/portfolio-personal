@@ -37,10 +37,10 @@ export function useCubeMotion(
     const languageChanged = before.locale !== locale;
     const frames: Keyframe[] = languageChanged ? [
       { transform: transformFor(before.face), offset: 0 },
-      { transform: `${depth} translateY(-45px) scale(.72) rotateX(${x + 150}deg) rotateY(${y + 260}deg) rotateZ(-14deg)`, offset: .35 },
-      { transform: `${depth} translateY(-20px) scale(.84) rotateX(${x + 310}deg) rotateY(${y + 640}deg) rotateZ(8deg)`, offset: .72 },
-      { transform: `${depth} translateY(6px) scale(.98) rotateX(${x + 360}deg) rotateY(${y + 720}deg) rotateZ(0deg)`, offset: .92 },
-      { transform: `${depth} rotateX(${x + 360}deg) rotateY(${y + 720}deg) rotateZ(0deg)`, offset: 1 },
+      { transform: `${depth} translateY(-20px) scale(.9) rotateX(${x + 12}deg) rotateY(${y + 120}deg) rotateZ(-5deg)`, offset: .35 },
+      { transform: `${depth} translateY(-12px) scale(.94) rotateX(${x - 8}deg) rotateY(${y + 270}deg) rotateZ(4deg)`, offset: .72 },
+      { transform: `${depth} translateY(2px) scale(.99) rotateX(${x}deg) rotateY(${y + 350}deg) rotateZ(0deg)`, offset: .92 },
+      { transform: `${depth} rotateX(${x}deg) rotateY(${y + 360}deg) rotateZ(0deg)`, offset: 1 },
     ] : [{ transform: transformFor(before.face) }, { transform: target }];
 
     setMoving(true);
@@ -48,7 +48,7 @@ export function useCubeMotion(
     let animation: Animation;
     try {
       animation = node.animate(frames, {
-        duration: languageChanged ? 800 : 500,
+        duration: languageChanged ? 1200 : 850,
         easing: 'cubic-bezier(.33,0,.25,1)',
       });
     } catch {
