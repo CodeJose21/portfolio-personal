@@ -24,7 +24,7 @@ test('direct links, keyboard navigation and browser history select the right sec
   // Inactive content stays mounted without leaking into the tab order.
   await expect(page.locator('.face-interactive')).toHaveCount(6);
   await expect(page.locator('.face-interactive:visible')).toHaveCount(1);
-  const projects = page.locator('.die-map .map-projects');
+  const projects = page.locator('.face-navigation a[href="#projects"]');
   await projects.focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#projects$/);
@@ -104,6 +104,7 @@ test('enabling reduced motion during a roll cancels animation without losing nav
 });
 
 test('linear view exposes every section and uses the index for navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('./?view=linear&lang=en#education');
   await expect(page.locator('.face-interactive:visible')).toHaveCount(6);
   await expect(page.locator('.die-map')).toHaveCount(0);
@@ -122,6 +123,7 @@ test('linear view exposes every section and uses the index for navigation', asyn
 });
 
 test('cube view shows the die-map control', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('./');
   await expect(page.locator('.die-map')).toBeVisible();
   await expect(page.locator('.face-navigation')).toBeVisible();
